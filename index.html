@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#00ffc8"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Arena Extinctio"/>
+<title>Arena Extinctio — Regolamento</title>
+<link rel="manifest" href="./manifest.json"/>
+<link rel="apple-touch-icon" href="./icon-192.png"/>
+<link rel="icon" href="./icon-192.png" type="image/png"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#050010;
+  --bg2:#0a0020;
+  --bg3:#0f0030;
+  --card:#0d001f;
+  --card2:#130028;
+  --neon:#00ffc8;
+  --neon2:#ff5000;
+  --neon3:#9b00ff;
+  --neon4:#ffd700;
+  --text:#e0d8ff;
+  --text2:#8a80b0;
+  --border:#1a0040;
+  --border2:#00ffc830;
+  --glow:0 0 8px #00ffc860,0 0 20px #00ffc820;
+  --glow2:0 0 8px #ff500060,0 0 20px #ff500020;
+  --radius:6px;
+  --font-head:'Orbitron',monospace;
+  --font-mono:'Share Tech Mono',monospace;
+  --font-body:'Rajdhani',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;min-height:100vh;overflow-x:hidden}
+
+/* BG GRID */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(var(--border2) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border2) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 20% 20%,#3b0080 0%,transparent 50%),
+              radial-gradient(ellipse at 80% 80%,#001a40 0%,transparent 50%);
+  pointer-events:none;z-index:0;opacity:0.5;
+}
+
+#app{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 0 80px}
+
+/* HEADER */
+.site-header{
+  background:linear-gradient(180deg,#0a0025 0%,transparent 100%);
+  padding:18px 16px 10px;
+  border-bottom:1px solid var(--border2);
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(12px);
+}
+.header-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{
+  font-family:var(--font-head);font-weight:900;font-size:clamp(15px,3vw,22px);
+  color:var(--neon);text-shadow:var(--glow);letter-spacing:2px;white-space:nowrap;
+}
+.logo span{color:var(--neon2)}
+.tagline{font-family:var(--font-mono);font-size:11px;color:var(--text2);flex:1;min-width:100px}
+
+/* SEARCH */
+.search-wrap{margin-top:10px;position:relative}
+.search-input{
+  width:100%;background:var(--card2);border:1px solid var(--border2);
+  color:var(--text);font-family:var(--font-mono);font-size:13px;
+  padding:9px 38px 9px 14px;border-radius:var(--radius);outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.search-input:focus{border-color:var(--neon);box-shadow:var(--glow)}
+.search-input::placeholder{color:var(--text2)}
+.search-clear{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--text2);cursor:pointer;font-size:16px;
+  display:none;
+}
+.search-results{
+  position:absolute;top:calc(100% + 4px);left:0;right:0;
+  background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  max-height:300px;overflow-y:auto;z-index:200;display:none;
+}
+.sr-item{
+  padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);
+  font-family:var(--font-body);font-size:14px;
+  transition:background .15s;
+}
+.sr-item:last-child{border-bottom:none}
+.sr-item:hover{background:var(--card2)}
+.sr-section{font-family:var(--font-mono);font-size:10px;color:var(--neon);margin-bottom:2px}
+.sr-preview{color:var(--text2);font-size:12px}
+mark{background:var(--neon2);color:#000;border-radius:2px;padding:0 2px}
+
+/* TABS */
+.tab-nav{
+  display:flex;gap:4px;padding:10px 12px 0;
+  overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);
+  background:var(--bg2);
+}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{
+  font-family:var(--font-head);font-size:10px;font-weight:700;
+  letter-spacing:1px;color:var(--text2);
+  background:var(--card);border:1px solid var(--border);
+  padding:8px 14px;border-radius:4px 4px 0 0;cursor:pointer;
+  white-space:nowrap;transition:all .2s;border-bottom:none;
+  flex-shrink:0;
+}
+.tab-btn:hover{color:var(--neon);border-color:var(--border2)}
+.tab-btn.active{
+  color:var(--neon);border-color:var(--neon);border-bottom:1px solid var(--bg2);
+  background:var(--bg2);text-shadow:var(--glow);
+  margin-bottom:-1px;z-index:1;
+}
+
+/* CONTENT */
+.tab-panel{display:none;padding:16px}
+.tab-panel.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION TITLES */
+.sec-title{
+  font-family:var(--font-head);font-size:14px;font-weight:700;
+  color:var(--neon);letter-spacing:2px;text-transform:uppercase;
+  border-left:3px solid var(--neon2);padding-left:10px;
+  margin-bottom:14px;text-shadow:var(--glow);
+}
+.sec-sub{
+  font-family:var(--font-head);font-size:11px;color:var(--neon3);
+  letter-spacing:1px;margin-bottom:10px;margin-top:18px;
+}
+
+/* COLPO D'OCCHIO GRID */
+.stat-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;
+  margin-bottom:18px;
+}
+.stat-card{
+  background:var(--card2);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:12px 10px;text-align:center;
+  transition:transform .15s,box-shadow .15s;
+}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--glow)}
+.stat-val{
+  font-family:var(--font-head);font-size:clamp(20px,5vw,32px);font-weight:900;
+  color:var(--neon2);text-shadow:var(--glow2);
+}
+.stat-lbl{
+  font-family:var(--font-mono);font-size:10px;color:var(--text2);
+  margin-top:4px;text-transform:uppercase;letter-spacing:1px;
+}
+
+/* BADGE */
+.badge{
+  display:inline-block;background:var(--neon2);color:#000;
+  font-family:var(--font-mono);font-size:11px;font-weight:700;
+  padding:1px 7px;border-radius:3px;margin:0 2px;vertical-align:middle;
+}
+.badge.teal{background:var(--neon);color:#000}
+.badge.purple{background:var(--neon3);color:#fff}
+.badge.gold{background:var(--neon4);color:#000}
+
+/* ACCORDION */
+.acc-item{
+  border:1px solid var(--border);border-radius:var(--radius);
+  margin-bottom:8px;overflow:hidden;
+  transition:border-color .2s;
+}
+.acc-item:hover{border-color:var(--border2)}
+.acc-item.open{border-color:var(--neon);box-shadow:0 0 10px #00ffc810}
+.acc-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;cursor:pointer;
+  background:var(--card);
+  font-family:var(--font-body);font-weight:700;font-size:15px;
+  color:var(--text);transition:background .15s;
+  user-select:none;
+}
+.acc-head:hover{background:var(--card2)}
+.acc-item.open .acc-head{color:var(--neon);background:var(--card2)}
+.acc-arrow{font-size:12px;color:var(--neon2);transition:transform .25s;flex-shrink:0}
+.acc-item.open .acc-arrow{transform:rotate(180deg)}
+.acc-body{display:none;padding:14px;background:var(--bg3);font-family:var(--font-body);font-size:15px;line-height:1.6;color:var(--text)}
+.acc-item.open .acc-body{display:block;animation:fadeIn .2s}
+
+/* TABLE */
+.rule-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.rule-table th{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:1px;
+  color:var(--neon);border-bottom:1px solid var(--neon);
+  padding:6px 8px;text-align:left;background:var(--card);
+}
+.rule-table td{
+  padding:7px 8px;border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+.rule-table tr:last-child td{border-bottom:none}
+.rule-table tr:hover td{background:var(--card2)}
+
+/* LIST */
+.rule-list{list-style:none;padding:0}
+.rule-list li{
+  padding:6px 0 6px 16px;border-bottom:1px solid var(--border);
+  position:relative;
+}
+.rule-list li::before{
+  content:'▸';position:absolute;left:0;color:var(--neon2);font-size:12px;
+}
+.rule-list li:last-child{border-bottom:none}
+
+/* CHARS GRID */
+.chars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.char-card{
+  background:var(--card2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px;transition:border-color .2s,box-shadow .2s;
+}
+.char-card:hover{border-color:var(--neon);box-shadow:var(--glow)}
+.char-name{
+  font-family:var(--font-head);font-size:13px;color:var(--neon);
+  margin-bottom:4px;text-shadow:var(--glow);
+}
+.char-origin{font-size:13px;color:var(--text2);margin-bottom:8px;font-style:italic}
+.char-passive{
+  background:var(--bg);border-left:2px solid var(--neon3);
+  padding:6px 10px;font-size:13px;border-radius:0 3px 3px 0;margin-bottom:6px;
+}
+.char-ulti{
+  background:var(--bg);border-left:2px solid var(--neon2);
+  padding:6px 10px;font-size:13px;border-radius:0 3px 3px 0;
+}
+.char-tag{font-family:var(--font-mono);font-size:10px;color:var(--text2);margin-bottom:2px;letter-spacing:1px}
+
+/* MANA/COST GRID */
+.cost-block{
+  background:var(--card2);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:12px;margin-bottom:10px;
+}
+.cost-title{font-family:var(--font-mono);font-size:11px;color:var(--neon);letter-spacing:1px;margin-bottom:8px}
+.cost-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);font-size:14px}
+.cost-row:last-child{border-bottom:none}
+.cost-val{font-family:var(--font-mono);color:var(--neon2);font-weight:700}
+
+/* HIGHLIGHT SEARCH */
+.hl-target{outline:2px solid var(--neon4);border-radius:2px;animation:pulse 1s 3}
+@keyframes pulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 12px var(--neon4)}}
+
+/* NOTE BOX */
+.note-box{
+  background:linear-gradient(135deg,#1a0040 0%,#0d001f 100%);
+  border:1px solid var(--neon3);border-radius:var(--radius);
+  padding:12px 14px;margin:10px 0;font-size:14px;
+}
+.note-box::before{
+  content:'⚠ NOTA: ';font-family:var(--font-mono);font-size:11px;
+  color:var(--neon3);display:block;margin-bottom:4px;
+}
+
+/* TILES GRID */
+.tiles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.tile-card{
+  background:var(--card2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:10px;text-align:center;
+}
+.tile-icon{font-size:24px;margin-bottom:4px}
+.tile-name{font-family:var(--font-mono);font-size:11px;color:var(--neon);letter-spacing:1px;margin-bottom:2px}
+.tile-qty{font-family:var(--font-head);font-size:18px;color:var(--neon2)}
+.tile-desc{font-size:12px;color:var(--text2);margin-top:4px}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--neon3)}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .stat-grid{grid-template-columns:repeat(3,1fr)}
+  .chars-grid{grid-template-columns:1fr}
+  .tab-btn{font-size:9px;padding:7px 10px}
+  .site-header{padding:14px 12px 8px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="logo">ARENA <span>EXTINCTIO</span></div>
+    <div class="tagline">// REGOLAMENTO INTERATTIVO v1.0 // NEONFALL INDUSTRIES //</div>
+  </div>
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="searchInput" placeholder="🔍  Cerca regola, personaggio, arma…" autocomplete="off"/>
+    <button class="search-clear" id="searchClear">✕</button>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</header>
+
+<!-- TABS -->
+<nav class="tab-nav" id="tabNav">
+  <button class="tab-btn active" data-tab="overview">⚡ OVERVIEW</button>
+  <button class="tab-btn" data-tab="setup">🗺 SETUP</button>
+  <button class="tab-btn" data-tab="turno">🎲 TURNO</button>
+  <button class="tab-btn" data-tab="combattimento">⚔ COMBATTIMENTO</button>
+  <button class="tab-btn" data-tab="carte">🃏 CARTE &amp; MERCATO</button>
+  <button class="tab-btn" data-tab="personaggi">👤 PERSONAGGI</button>
+  <button class="tab-btn" data-tab="tessere">🔷 TESSERE</button>
+  <button class="tab-btn" data-tab="lore">📡 LORE</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════ TAB: OVERVIEW -->
+<div class="tab-panel active" id="tab-overview">
+  <div class="sec-title">// COLPO D'OCCHIO //</div>
+
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-val">2–6</div><div class="stat-lbl">Giocatori</div></div>
+    <div class="stat-card"><div class="stat-val">10</div><div class="stat-lbl">Punti Vita</div></div>
+    <div class="stat-card"><div class="stat-val">4</div><div class="stat-lbl">Slot Mana</div></div>
+    <div class="stat-card"><div class="stat-val">61</div><div class="stat-lbl">Tessere Hex</div></div>
+    <div class="stat-card"><div class="stat-val">5</div><div class="stat-lbl">Livelli Mappa</div></div>
+    <div class="stat-card"><div class="stat-val">185</div><div class="stat-lbl">Carte Totali</div></div>
+    <div class="stat-card"><div class="stat-val">10</div><div class="stat-lbl">Personaggi</div></div>
+    <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Dadi D6</div></div>
+    <div class="stat-card"><div class="stat-val">10</div><div class="stat-lbl">Max Monete</div></div>
+  </div>
+
+  <div class="sec-sub">// REGOLE RAPIDE //</div>
+
+  <div class="acc-item open" id="acc-obiettivo">
+    <div class="acc-head" onclick="toggleAcc(this)">🎯 Obiettivo <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">Essere l'<strong>ultimo giocatore in vita</strong>. La mappa si restringe rimuovendo gli anelli esterni progressivamente finché restano solo i livelli 1–2.</div>
+  </div>
+
+  <div class="acc-item" id="acc-movimento-quick">
+    <div class="acc-head" onclick="toggleAcc(this)">🎲 Movimento rapido <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li>Mappa ≥3 livelli → tira <span class="badge teal">2D6</span>, muoviti esattamente di quel numero</li>
+        <li>Mappa a soli livelli 1–2 → tira <span class="badge teal">1D6</span></li>
+        <li>Non puoi consumare tutti i passi? → subisci <span class="badge">1 danno</span></li>
+        <li>Devi fermarti su tessera per raccogliere; attraversare non basta</li>
+        <li>Portale calpestato → teletrasporto <strong>obbligatorio</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc-item" id="acc-mana-quick">
+    <div class="acc-head" onclick="toggleAcc(this)">🔋 Mana rapido <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <table class="rule-table">
+        <tr><th>Azione</th><th>Costo Mana</th></tr>
+        <tr><td>Muoversi</td><td><span class="badge teal">GRATUITO</span></td></tr>
+        <tr><td>Attivare tessera</td><td><span class="badge teal">GRATUITO</span></td></tr>
+        <tr><td>Craft</td><td><span class="badge">1</span> per craft</td></tr>
+        <tr><td>Usare skill</td><td><span class="badge">1</span></td></tr>
+        <tr><td>Usare Ulti</td><td><span class="badge">3</span></td></tr>
+        <tr><td>Arma base 1° att.</td><td><span class="badge teal">GRATUITO</span></td></tr>
+        <tr><td>Arma standard 1° att.</td><td><span class="badge">1</span></td></tr>
+        <tr><td>Arma avanzata 1° att.</td><td><span class="badge">1</span></td></tr>
+        <tr><td>Comprare vita/muniz.</td><td><span class="badge">1</span> + monete</td></tr>
+      </table>
+      <div class="note-box">Il mana si ricarica completamente ad ogni <strong>cambio giornata</strong>. Max 4 slot (5 con Sfera di Energia).</div>
+    </div>
+  </div>
+
+  <div class="acc-item" id="acc-monete-quick">
+    <div class="acc-head" onclick="toggleAcc(this)">💰 Monete rapido <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li>Eliminare avversario → <span class="badge gold">+3 monete</span></li>
+        <li>Tessera Luogo al cambio giornata → <span class="badge gold">+2 monete</span></li>
+        <li>Tessera Rifugio al cambio giornata → <span class="badge gold">+1 moneta</span></li>
+        <li><span class="badge teal">2 monete</span> = 1 munizione (+ 1 mana)</li>
+        <li><span class="badge teal">3 monete</span> = +1 vita (+ 1 mana)</li>
+        <li>Max <span class="badge">10 monete</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc-item" id="acc-rientri">
+    <div class="acc-head" onclick="toggleAcc(this)">↩ Rientri per N giocatori <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <table class="rule-table">
+        <tr><th>Giocatori</th><th>Rientri</th><th>Note</th></tr>
+        <tr><td>6</td><td><span class="badge">0</span></td><td>Nessun rientro</td></tr>
+        <tr><td>5</td><td><span class="badge">1 totale</span></td><td>Chi lo raccoglie lo tiene</td></tr>
+        <tr><td>4</td><td><span class="badge">2 totali</span></td><td>Max 1 a giocatore</td></tr>
+        <tr><td>3</td><td><span class="badge teal">1 ciascuno</span></td><td>Di diritto</td></tr>
+        <tr><td>2</td><td><span class="badge teal">2 ciascuno</span></td><td>Di diritto</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB: SETUP -->
+<div class="tab-panel" id="tab-setup">
+  <div class="sec-title">// SETUP INIZIALE //</div>
+
+  <div class="acc-item open">
+    <div class="acc-head" onclick="toggleAcc(this)">🗺 Costruzione Mappa <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      Disponi le tessere ad <strong>alveare concentrico</strong> partendo dalla tessera centrale casuale (Liv.1):
+      <table class="rule-table" style="margin-top:10px">
+        <tr><th>Livello</th><th>Tessere</th><th>Tipo anello</th></tr>
+        <tr><td><span class="badge teal">1</span></td><td>1</td><td>Tessera centrale</td></tr>
+        <tr><td><span class="badge teal">2</span></td><td>6</td><td>1° anello</td></tr>
+        <tr><td><span class="badge teal">3</span></td><td>12</td><td>2° anello</td></tr>
+        <tr><td><span class="badge teal">4</span></td><td>18</td><td>3° anello</td></tr>
+        <tr><td><span class="badge teal">5</span></td><td>24</td><td>Anello esterno</td></tr>
+      </table>
+      Le tessere sono disposte <strong>casualmente</strong> all'interno della loro fascia.
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">👥 Posizionamento Giocatori <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      Ogni giocatore parte sulla <strong>tessera Luogo numerata</strong> corrispondente al suo numero:
+      <br/>Giocatore 1 → Tessera 1 &nbsp;|&nbsp; Giocatore 2 → Tessera 2 &nbsp;…&nbsp; (max 6)
+      <br/><br/>Ogni personaggio parte con: <span class="badge teal">10 PV</span> e <span class="badge teal">4 Mana</span>.
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🃏 Preparazione Mazzi <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li>Mischia i 3 mazzi principali: <strong>Materiali</strong>, <strong>Skill</strong>, <strong>Armi</strong></li>
+        <li>Prepara il mazzo <strong>Armi Base</strong> separatamente (solo per tessere equipaggiamento)</li>
+        <li>Per ciascuno dei 3 mazzi principali metti <span class="badge">1 carta scoperta</span> come display</li>
+        <li>Posiziona risorse fisiche sui crateri delle tessere Ulti</li>
+        <li>Metti il segnalino Giorno/Notte su <span class="badge gold">GIORNO</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">⏱ Plancia Tempo &amp; Rimozione Livelli <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      La mappa si restringe seguendo la Plancia Tempo:
+      <ul class="rule-list">
+        <li>Dopo X cambi giornata → rimuovi <span class="badge">Livello 5</span></li>
+        <li>Successivamente → rimuovi <span class="badge">Livello 4</span></li>
+        <li>Successivamente → rimuovi <span class="badge">Livello 3</span></li>
+        <li>Da quel momento: movimento con <span class="badge teal">1D6</span> invece di 2D6</li>
+      </ul>
+      <div class="note-box">Segui la timeline stampata sulla plancia. Ogni cambio di periodo (Giorno↔Notte) avanza la plancia.</div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">📦 Inventario Massimo <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li><span class="badge">1</span> arma primaria (base/standard/avanzata)</li>
+        <li><span class="badge">1</span> arma secondaria</li>
+        <li><span class="badge">1</span> corpo a corpo</li>
+        <li><span class="badge">1</span> armatura</li>
+        <li><span class="badge">2</span> Vetro Cristallizzato &nbsp;|&nbsp; <span class="badge">2</span> Uranio Impoverito &nbsp;|&nbsp; <span class="badge">2</span> Minerale Nucleare</li>
+        <li><span class="badge">2</span> Medikit/Cibo totali &nbsp;|&nbsp; <span class="badge">2</span> Skill &nbsp;|&nbsp; <span class="badge">2</span> Carte speciali</li>
+        <li><strong>Zaino</strong>: +2 slot risorsa, +1 slot progetti mentre posseduto</li>
+        <li>Carta in eccesso → scartata per <span class="badge gold">1 moneta</span> (se &lt;10)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB: TURNO -->
+<div class="tab-panel" id="tab-turno">
+  <div class="sec-title">// STRUTTURA DEL TURNO //</div>
+
+  <div class="acc-item open">
+    <div class="acc-head" onclick="toggleAcc(this)">📋 Ordine Azioni <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ol style="padding-left:18px;line-height:2">
+        <li><strong>Movimento obbligatorio</strong> (tira dadi, muoviti esattamente)</li>
+        <li><strong>Attivazione tessera</strong> su cui ci si ferma (gratuita)</li>
+        <li><strong>Azioni facoltative</strong> finché il mana lo consente:<br/>
+          craft · trappole/torrette · skill/carte · attacchi · ulti (3 mana) · acquisto mercato (monete)
+        </li>
+        <li><strong>Fine turno</strong> (effetti istantanei/permanenti)</li>
+      </ol>
+      <div class="note-box">L'ultimo giocatore a terminare il turno → scatta il <strong>cambio giornata</strong> → tutto il mana si ricarica.</div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🚶 Movimento — Regole Complete <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li>Mappa ≥3 livelli → <span class="badge teal">2D6</span> &nbsp;|&nbsp; Solo livelli 1–2 → <span class="badge teal">1D6</span></li>
+        <li>Devi muoverti <strong>esattamente</strong> del numero ottenuto (non meno, non più)</li>
+        <li>Se impossibile consumare tutti i passi → <span class="badge">−1 PV</span> e fermati al max raggiungibile</li>
+        <li>Non puoi tornare su tessera già calpestata nello stesso turno</li>
+        <li>Non puoi attraversare laghi/montagne insormontabili</li>
+        <li>Muri parziali obbligano a deviare (consumano movimento extra)</li>
+        <li>Portale calpestato → teletrasporto <strong>immediato e obbligatorio</strong> verso portale stesso tipo o tessera doppia</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🔋 Costi Mana Dettagliati <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+
+      <div class="cost-block">
+        <div class="cost-title">ARMI BASE</div>
+        <div class="cost-row"><span>1° attacco</span><span class="cost-val">GRATUITO</span></div>
+        <div class="cost-row"><span>2° attacco</span><span class="cost-val">+1</span></div>
+        <div class="cost-row"><span>3° attacco</span><span class="cost-val">+2</span></div>
+        <div class="cost-row"><span>4° attacco</span><span class="cost-val">+3</span></div>
+      </div>
+
+      <div class="cost-block">
+        <div class="cost-title">ARMI STANDARD</div>
+        <div class="cost-row"><span>1° attacco</span><span class="cost-val">1</span></div>
+        <div class="cost-row"><span>2° attacco</span><span class="cost-val">+2</span></div>
+        <div class="cost-row"><span>3° attacco</span><span class="cost-val">+2</span></div>
+      </div>
+
+      <div class="cost-block">
+        <div class="cost-title">ARMI AVANZATE</div>
+        <div class="cost-row"><span>1° attacco</span><span class="cost-val">1</span></div>
+        <div class="cost-row"><span>2°+ attacchi</span><span class="cost-val">+3 ciascuno</span></div>
+      </div>
+
+      <div class="cost-block">
+        <div class="cost-title">ALTRE AZIONI</div>
+        <div class="cost-row"><span>Craft</span><span class="cost-val">1</span></div>
+        <div class="cost-row"><span>Skill / effetto carta</span><span class="cost-val">1</span></div>
+        <div class="cost-row"><span>Ulti</span><span class="cost-val">3</span></div>
+        <div class="cost-row"><span>Comprare vita/muniz. (monete)</span><span class="cost-val">1</span></div>
+        <div class="cost-row"><span>Carte Vantaggio</span><span class="cost-val">GRATUITO</span></div>
+        <div class="cost-row"><span>Movimento</span><span class="cost-val">GRATUITO</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">⚒ Crafting <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li>Serve avere le risorse indicate sul progetto + pagare <span class="badge">1 mana</span></li>
+        <li>Le armi <strong>avanzate</strong> si ottengono <em>solo tramite crafting</em> (mai da effetti casuali)</li>
+        <li>Max <span class="badge">1 mod</span> per arma (+danno, +gittata o +capienza)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🌙 Cambio Giornata <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      Avviene dopo che <strong>l'ultimo giocatore del round</strong> termina il turno:
+      <ul class="rule-list">
+        <li>Si aggiorna la Plancia Tempo (avanzamento verso rimozione livello)</li>
+        <li><strong>Tutto il mana</strong> di tutti i giocatori si ricarica</li>
+        <li>Abilità e passive dipendenti da Giorno/Notte cambiano effetto</li>
+        <li>Verifica se bisogna rimuovere un livello</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB: COMBATTIMENTO -->
+<div class="tab-panel" id="tab-combattimento">
+  <div class="sec-title">// COMBATTIMENTO //</div>
+
+  <div class="acc-item open">
+    <div class="acc-head" onclick="toggleAcc(this)">⚔ Risoluzione Attacco <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ol style="padding-left:18px;line-height:2">
+        <li>Attaccante tira <span class="badge teal">2D6</span></li>
+        <li>Difensore tira <span class="badge teal">2D6</span></li>
+        <li>Chi ha il risultato più alto "vince" → infligge il danno fisso dell'arma</li>
+        <li>In caso di <strong>pareggio</strong> → vince l'<strong>attaccante</strong></li>
+      </ol>
+      <br/>
+      <strong>Vantaggio:</strong> tira <span class="badge">3D6</span>, scegli i <em>migliori</em> 2<br/>
+      <strong>Svantaggio:</strong> tira <span class="badge">3D6</span>, scegli i <em>peggiori</em> 2<br/><br/>
+      <div class="note-box">Se attacchi un nemico nella <strong>tua stessa tessera</strong> con arma gittata ≥1 → difensore ha <strong>vantaggio</strong>, attaccante ha <strong>svantaggio</strong>.</div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">👊 Pugno (default) <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      Gittata <span class="badge">0</span> · Danno <span class="badge">1</span> · Colpi <span class="badge teal">∞</span><br/><br/>
+      Se il pugno <strong>fallisce</strong> (attaccante perde la sfida dadi) → attaccante subisce <span class="badge">1 danno</span>.
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🛡 Armature <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <table class="rule-table">
+        <tr><th>Tipo</th><th>Difesa</th><th>Durata</th></tr>
+        <tr><td>Standard</td><td><span class="badge">1</span> danno assorbito/attacco</td><td><span class="badge teal">2</span> attacchi</td></tr>
+        <tr><td>Avanzata</td><td><span class="badge">2</span> danni assorbiti/attacco</td><td><span class="badge teal">2</span> attacchi</td></tr>
+      </table>
+      <br/>Ogni attacco subito (anche con 0 danni passanti) → l'armatura perde <span class="badge">1 punto durata</span>. Esaurita la durata → nessun bonus fino a nuovo craft.
+      <br/><br/><em>Esempio: Armatura Avanzata (Dif.2, Dur.2). Subisci 4 danni → assorbe 2 → subisci 2 → durata scende a 1.</em>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🔫 Tabella Armi <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <table class="rule-table">
+        <tr><th>Nome</th><th>Tipo</th><th>Cat.</th><th>Gittata</th><th>Danno</th><th>Muniz.</th><th>Fallim.</th></tr>
+        <tr><td>OURBAN</td><td>C.a.C.</td><td><span class="badge teal">Base</span></td><td>0</td><td><span class="badge">2</span></td><td>2</td><td>+1 a te</td></tr>
+        <tr><td>HERE</td><td>C.a.C.</td><td><span class="badge purple">Avanz.</span></td><td>0</td><td><span class="badge">5</span></td><td>3</td><td>+2 a te</td></tr>
+        <tr><td>XAS</td><td>Pistola</td><td><span class="badge teal">Base</span></td><td>+1</td><td><span class="badge">1</span></td><td>1</td><td>—</td></tr>
+        <tr><td>SOFTLYNE</td><td>Pistola</td><td><span class="badge">Std</span></td><td>+1</td><td><span class="badge">1</span></td><td>3</td><td>—</td></tr>
+        <tr><td>CLONE Y-O</td><td>Pistola</td><td><span class="badge purple">Avanz.</span></td><td>+1</td><td><span class="badge">2</span></td><td>3</td><td>—</td></tr>
+        <tr><td>FOOLSHIFT</td><td>Mitra</td><td><span class="badge teal">Base</span></td><td>+2</td><td><span class="badge">1</span></td><td>2</td><td>—</td></tr>
+        <tr><td>CRATTER</td><td>Mitra</td><td><span class="badge">Std</span></td><td>+2</td><td><span class="badge">2</span></td><td>2</td><td>—</td></tr>
+        <tr><td>FREEMIND</td><td>Mitra</td><td><span class="badge purple">Avanz.</span></td><td>+3</td><td><span class="badge">3</span></td><td>3</td><td>—</td></tr>
+        <tr><td>ELINDEA</td><td>Cecch.</td><td><span class="badge">Std</span></td><td>+4</td><td><span class="badge">4</span></td><td>1</td><td>—</td></tr>
+        <tr><td>SHAPE LIAR ★</td><td>Cecch.</td><td><span class="badge purple">Avanz.</span></td><td>+6</td><td><span class="badge">6</span></td><td>1</td><td>2° bersaglio = danno ÷2</td></tr>
+        <tr><td>TUA</td><td>Pompa</td><td><span class="badge">Std</span></td><td>+1</td><td><span class="badge">3</span></td><td>2</td><td>—</td></tr>
+        <tr><td>U-J SUTOM</td><td>Pompa</td><td><span class="badge purple">Avanz.</span></td><td>+1</td><td><span class="badge">5</span></td><td>2</td><td>—</td></tr>
+      </table>
+      <div class="note-box">★ SHAPE LIAR: può colpire un 2° bersaglio in linea con danno dimezzato. L'attaccante tira 1 volta; ogni difensore tira i suoi dadi separatamente.</div>
+      Gittata = tessere in linea retta. I proiettili non attraversano muri/insormontabili e <strong>non vengono teletrasportati</strong>.
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">💣 Trappole &amp; Torrette <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <strong>Trappola Rallentante:</strong><br/>
+      Si piazza sulla tessera corrente. Segnalini su tutte le adiacenti. Chi finisce su una tessera segnalata → <strong>si ferma</strong> e non può attaccare quel turno. La trappola ha <span class="badge">4 PV</span>; segnalini consumati ad ogni passaggio. Distrutta → tutti i segnalini rimossi.
+      <br/><br/>
+      <strong>Torretta di Sorveglianza:</strong><br/>
+      Chi passa sulle adiacenti → subisce <span class="badge">2 danni</span>. Ogni segnalino rimosso quando calpestato. Torretta ha <span class="badge">4 PV</span>.
+      <br/><br/>
+      <div class="note-box">Trappole e torrette <strong>persistono</strong> anche se il piazzatore viene eliminato, finché non sono distrutte.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB: CARTE & MERCATO -->
+<div class="tab-panel" id="tab-carte">
+  <div class="sec-title">// CARTE &amp; MERCATO //</div>
+
+  <div class="acc-item open">
+    <div class="acc-head" onclick="toggleAcc(this)">🃏 I Mazzi <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li><strong>Mazzo Materiali</strong> (75 carte) — Vetro Cristallizzato, Uranio Impoverito, Minerale Nucleare, cibo, medikit…</li>
+        <li><strong>Mazzo Skill</strong> (43 carte) — skill usa e getta, bonus/malus, effetti speciali</li>
+        <li><strong>Mazzo Armi &amp; Progetti</strong> (67 carte) — progetti per craft armi/armature, mod</li>
+        <li><strong>Mazzo Armi Base</strong> (separato) — solo da tessere equipaggiamento</li>
+      </ul>
+      Per ogni mazzo principale → <span class="badge teal">1 carta scoperta</span> nel display (rimpiazzata se acquistata).
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🛒 Costi Mercato <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <table class="rule-table">
+        <tr><th>Carta</th><th>Dal mazzo coperto</th><th>Dal display (visibile)</th></tr>
+        <tr><td>Risorse</td><td><span class="badge gold">2 monete</span></td><td><span class="badge gold">3 monete</span></td></tr>
+        <tr><td>Armi / Progetti</td><td><span class="badge gold">2 monete</span></td><td><span class="badge gold">3 monete</span></td></tr>
+        <tr><td>Skill / Abilità</td><td><span class="badge gold">3 monete</span></td><td><span class="badge gold">4 monete</span></td></tr>
+      </table>
+      <br/>Su <strong>Tessera Carte</strong> (gratuito, no mana): peschi <span class="badge teal">2 carte coperte</span> a scelta di mazzo OPPURE <span class="badge teal">1 carta dal display</span>.
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🃏 Skill — Lista Completa <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li><strong>Teletrasporto Corto</strong>: spostati su tessera entro 2 (notte: 3) tessere</li>
+        <li><strong>Repeat</strong>: effettua di nuovo un turno completo</li>
+        <li><strong>Scudo Solare</strong>: blocca fino a <span class="badge">3</span> danni (giorno) o <span class="badge">2</span> (notte) al primo attacco; poi si disattiva</li>
+        <li><strong>Mira Perfetta</strong>: prossimo attacco inevitabile ma −2 danno (giorno) o −1 danno (notte)</li>
+        <li><strong>Trappola Rallentante</strong>: piazza sulla tessera corrente (vedi Combattimento)</li>
+        <li><strong>Torretta di Sorveglianza</strong>: <span class="badge">2 danni</span> a chi passa sulle adiacenti (vedi Combattimento)</li>
+        <li><strong>Colpo Distruttivo</strong>: granata entro 3 tessere, <span class="badge">2 danni</span> infallibili su quella + 2 adiacenti a scelta; di giorno elude tutte le difese</li>
+        <li><strong>Tempesta Imminente</strong>: chi entro 2 cambi giornata non è in rifugio → <span class="badge">3 danni</span> (bypassa difese)</li>
+        <li><strong>Munizioni Farlocche</strong>: tutti gli altri perdono 1 munizione (principale, o secondaria in sua assenza)</li>
+        <li><strong>Sindaco</strong>: sostituisci 1 tessera (o ripristina una Ulti). Di notte puoi sostituirne <span class="badge teal">2</span></li>
+        <li><strong>Fabbro Amico</strong>: sconto 1 risorsa (Vetro/Uranio). Di giorno anche su Minerale Nucleare</li>
+        <li><strong>Manipolazione del Tempo</strong>: cambia Giorno↔Notte (avanti/indietro sulla Plancia Tempo)</li>
+        <li><strong>Ladro di Periferia</strong>: ruba 1 risorsa (Vetro/Uranio) a un avversario. Di notte anche Minerale Nucleare</li>
+        <li><strong>Risucchio di Energia</strong>: di giorno ogni avversario consuma <span class="badge">2 mana</span>; di notte <span class="badge">1</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">⭐ Carte Speciali <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li><strong>Vantaggio</strong>: usa e getta; concede vantaggio in un combattimento. <span class="badge teal">GRATUITA</span></li>
+        <li><strong>Sfera di Energia</strong>: +1 slot mana finché posseduta (max 5 mana)</li>
+        <li><strong>Zaino</strong>: +2 slot risorsa, +1 slot progetti</li>
+        <li><strong>Modifica Arma</strong>: +1 gittata o +1 danno o +1 capienza (max 1 mod/arma)</li>
+        <li><strong>Mina Esplosiva</strong>: <span class="badge">MALUS</span> — infligge 2 danni immediati al pescatore</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">💀 Eliminazione &amp; Loot <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      Quando un giocatore viene eliminato da un altro:
+      <ul class="rule-list">
+        <li>Perde tutto l'equipaggiamento (tranne monete) → segnalino <strong>LOOT</strong> sulla tessera</li>
+        <li>Chi elimina → <span class="badge gold">+3 monete</span> + può rubare <span class="badge">1 carta</span> a scelta</li>
+        <li>Eliminato → riceve monete solo se ne aveva meno di 2 (portato a 2)</li>
+      </ul>
+      <br/>
+      <strong>Interazione con il Loot:</strong>
+      <ul class="rule-list">
+        <li>Rivenderlo al rientrante: <span class="badge gold">5 monete</span></li>
+        <li>Prendere 2 carte + rivendere: <span class="badge gold">2 monete</span></li>
+        <li>Se la tessera viene rimossa → il loot va perso (tranne monete)</li>
+        <li><span class="badge teal">Ultima Mia Ika</span> recupera il loot sempre, anche da tessera rimossa</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">👻 Giocatore Fastidio <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      Giocatore eliminato che continua come "fastidio":
+      <ol style="padding-left:18px;line-height:1.8">
+        <li>Lancia <span class="badge teal">2 dadi</span> separatamente</li>
+        <li>Primo dado → numero di tessere da muovere (obbligatorio)</li>
+        <li>Secondo dado → azione:</li>
+      </ol>
+      <table class="rule-table" style="margin-top:8px">
+        <tr><th>Risultato</th><th>Azione</th></tr>
+        <tr><td><span class="badge teal">1–2</span></td><td>Blocca la tessera (altri non possono transitarci)</td></tr>
+        <tr><td><span class="badge">3–4</span></td><td>Ruba 1 risorsa a un avversario (vittima: dado in senso orario)</td></tr>
+        <tr><td><span class="badge gold">5–6</span></td><td>Scambia 2 tessere a scelta (può spezzare connettività)</td></tr>
+      </table>
+      <div class="note-box">Il Giocatore Fastidio eliminato per rimozione livello <strong>non può rientrare</strong>.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB: PERSONAGGI -->
+<div class="tab-panel" id="tab-personaggi">
+  <div class="sec-title">// I COMBATTENTI //</div>
+  <p style="font-family:var(--font-mono);font-size:12px;color:var(--text2);margin-bottom:14px">
+    Tutti partono con <span class="badge teal">10 PV</span> · <span class="badge teal">4 Mana</span>
+  </p>
+
+  <div class="chars-grid" id="charsGrid">
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB: TESSERE -->
+<div class="tab-panel" id="tab-tessere">
+  <div class="sec-title">// LE TESSERE //</div>
+
+  <div class="tiles-grid">
+    <div class="tile-card"><div class="tile-icon">🏁</div><div class="tile-name">LUOGO</div><div class="tile-qty">6</div><div class="tile-desc">Spawn / Respawn. +2 monete a cambio giornata</div></div>
+    <div class="tile-card"><div class="tile-icon">🏠</div><div class="tile-name">RIFUGIO</div><div class="tile-qty">5</div><div class="tile-desc">No attacchi. +1 moneta a cambio giornata</div></div>
+    <div class="tile-card"><div class="tile-icon">⚙️</div><div class="tile-name">EQUIPAGGIAMENTO</div><div class="tile-qty">9</div><div class="tile-desc">Arma base / refill muniz. / +2 PV</div></div>
+    <div class="tile-card"><div class="tile-icon">🃏</div><div class="tile-name">CARTE</div><div class="tile-qty">12</div><div class="tile-desc">Pesca gratuita: 2 coperte o 1 display</div></div>
+    <div class="tile-card"><div class="tile-icon">⚡</div><div class="tile-name">ULTI</div><div class="tile-qty">6</div><div class="tile-desc">Solo il proprietario può raccoglierla</div></div>
+    <div class="tile-card"><div class="tile-icon">🌀</div><div class="tile-name">TELETRASPORTO</div><div class="tile-qty">5</div><div class="tile-desc">2×A, 2×B, 1 doppio. Obbligatorio</div></div>
+    <div class="tile-card"><div class="tile-icon">🧱</div><div class="tile-name">MURI</div><div class="tile-qty">7</div><div class="tile-desc">Muro copre metà tessera. Deviazione obbligatoria</div></div>
+    <div class="tile-card"><div class="tile-icon">🌿</div><div class="tile-name">VUOTE</div><div class="tile-qty">7</div><div class="tile-desc">Nessuna interazione</div></div>
+    <div class="tile-card"><div class="tile-icon">🏔️</div><div class="tile-name">INSORMONTABILI</div><div class="tile-qty">4</div><div class="tile-desc">Non valicabili da personaggi né proiettili</div></div>
+  </div>
+
+  <div class="sec-sub" style="margin-top:20px">// RESPAWN — PRIORITÀ //</div>
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">↩ Priorità Respawn <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ol style="padding-left:18px;line-height:2">
+        <li>Tessere <strong>Luogo</strong> speciali</li>
+        <li>Tessere <strong>Rifugio</strong></li>
+        <li>Tessere <strong>Vuote</strong> paesaggio</li>
+        <li>Tessere <strong>casuali</strong> disponibili</li>
+      </ol>
+      Sorteggiare tra le tessere disponibili di quella priorità.
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🌀 Teletrasporti — Regole Complete <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li>Calpesti tessera portale → teletrasporto <strong>obbligatorio</strong> e immediato verso stesso tipo o tessera doppia</li>
+        <li><strong>Carte Teletrasporto</strong> → usabili da qualsiasi tessera, verso tessere ammissibili; indipendenti dall'obbligo portale</li>
+        <li>I proiettili <strong>non vengono teletrasportati</strong> dai portali</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAB: LORE -->
+<div class="tab-panel" id="tab-lore">
+  <div class="sec-title">// LORE — ARENA EXTINCTIO //</div>
+
+  <div class="acc-item open">
+    <div class="acc-head" onclick="toggleAcc(this)">🌆 Il Mondo nel 2187 <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      Il mondo è una <strong>distopia tecnologica</strong> governata da megacorporazioni che hanno spazzato via governi e libertà personali. Le città, avvolte da luci al neon e tecnologie onnipresenti, nascondono un oscuro segreto: la dipendenza dall'intrattenimento violento.<br/><br/>
+      <strong>NeonFall Industries</strong> ha creato l'Arena Extinctio: un <em>colosseo digitale e fisico</em> dove guerrieri, assassini e anomalie genetiche combattono per il divertimento di un pubblico globale.
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🏢 Funzione dell'Arena <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <ul class="rule-list">
+        <li><strong>Intrattenimento di Massa</strong>: valvola di sfogo, distrae le masse dai problemi reali</li>
+        <li><strong>Esperimenti di Controllo</strong>: ogni combattente è soggetto di studio; si testano impianti e armi sperimentali</li>
+        <li><strong>Punizione e Redenzione</strong>: criminali e ribelli costretti a partecipare; per alcuni è via d'uscita</li>
+        <li><strong>Propaganda</strong>: dimostra la "supremazia" delle corporazioni sul controllo della vita umana</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-head" onclick="toggleAcc(this)">🏆 Vincitori &amp; Perdenti <span class="acc-arrow">▼</span></div>
+    <div class="acc-body">
+      <strong>Il vincitore ottiene</strong> ricchezze, libertà apparente o realizzazione del desiderio — ma NeonFall si assicura di trarne sempre profitto.
+      <br/><br/>
+      <strong>I perdenti</strong> vengono usati per esperimenti, subiscono rimodellamento delle memorie, o vengono reinseriti in arene future a condizioni peggiori.
+      <br/><br/>
+      <em>"La vera domanda non è solo chi sopravvive, ma cosa resta di loro quando la battaglia è finita."</em>
+    </div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+// ─── DATA: CHARACTERS ───────────────────────────────────────────────────────
+const CHARS = [
+  {name:"God_Nocy", origin:"Entità quasi divina — clone genetico + AI", motivation:"Dimostrare che nessuno può sfuggire al suo giudizio",
+   passive:"Guadagna 2 vita ad ogni rimozione livello",
+   ulti:"Onda: 2 danni infallibili + spinge avversari indietro. Chi colpisce muro/bordo: +1 danno. Blocca Giorno/Notte il turno successivo."},
+  {name:"Hatci", origin:"Macchina da guerra liberata dai ribelli", motivation:"Distruggere le megacorporazioni e reclamare il libero arbitrio",
+   passive:"Tutte le armi base e standard +1 danno. C.a.C. fallito: subisci +1 danno",
+   ulti:"Missile: di notte 5 danni certi. Di giorno tira il dado — se fallisce non perdi l'Ulti ma consumi i mana."},
+  {name:"Karou", origin:"Ex cecchino militare francese tradito dalla sua squadra", motivation:"Vendicarsi del sistema e dimostrare il suo valore",
+   passive:"Tutte le armi base e standard +1 gittata (no corpo a corpo)",
+   ulti:"Giorno: gittata ∞ + vantaggio + 1 mana in meno su tutte le armi non corpo a corpo. Notte: gittata ∞ + scegli tra vantaggio OPPURE −1 mana. Fino a fine turno."},
+  {name:"Kone", origin:"Scienziato/mistico senegalese — fusione tra rituali e tech", motivation:"Liberare il villaggio natale dalla schiavitù tecnologica",
+   passive:"1 danno riflesso se subisci un colpo da 4+ danni",
+   ulti:"Evoca Sun (giorno) o Moon (notte) su 2 tessere a scelta. Non attraversabili."},
+  {name:"Lasep", origin:"Assassina addestradata per le corporazioni svedesi", motivation:"Ottenere libertà e una nuova vita",
+   passive:"Attacca sempre con vantaggio con armi base o standard",
+   ulti:"Pioggia acida: giorno 3 danni a tutti (tranne rifugi). Notte 1 danno a tutti."},
+  {name:"Mia Ika", origin:"Ingegnere giapponese tradita dalla sua corporazione", motivation:"Distruggere il sistema dall'interno con le sue stesse creazioni",
+   passive:"Ogni arma base e standard ha 1 slot munizioni extra",
+   ulti:"Rientro con tutto l'equipaggiamento. Giorno: respawn casuale. Notte: scegli tessera. Recupera il loot sempre. Se possiede un rientro lo consuma; altrimenti rientra comunque."},
+  {name:"'Nganga", origin:"Leader ribelle ghanese, difensora del suo popolo", motivation:"Proteggere i deboli e distruggere le corporazioni",
+   passive:"Non subisce danni né rallentamenti da trappole/torrette sulla mappa",
+   ulti:"Difesa reattiva: giorno se vinci dadi ti difendi fino a 5 danni / perdi → avversario subisce 2 danni. Notte se vinci → difendi fino a 3 danni. Attivabile al momento del bisogno."},
+  {name:"Ricca Gigaduca", origin:"Medico italiano clandestino, costretto nell'arena", motivation:"Finanziare una ricerca medica che salvi il mondo",
+   passive:"Quando guadagna vita da medikit, guadagna +1 PV extra (no eccesso)",
+   ulti:"Giorno: cura metà dei PV mancanti. Notte: cura completamente."},
+  {name:"Sejhnam", origin:"Mago arabo della tecnomagia (e fornaio)", motivation:"Rivendicare la tecnomagia come strumento di salvezza",
+   passive:"Sconto di 1 risorsa tra Vetro Cristallizzato e Uranio Impoverito",
+   ulti:"Nuvola Tossica: 2 danni a chiunque sia dentro (segnalini; non si consuma al passaggio). Se attivata di giorno, rimane anche di notte."},
+  {name:"Soshito", origin:"Ex hacker per il governo cinese, infiltratore", motivation:"Esporre i crimini delle megacorporazioni",
+   passive:"Si difende sempre con vantaggio contro armi base o standard",
+   ulti:"Giorno: nel prossimo turno gli avversari possono SOLO muoversi. Notte: tutti gli avversari saltano un turno."},
+];
+
+function buildChars(){
+  const grid = document.getElementById('charsGrid');
+  grid.innerHTML = CHARS.map(c=>`
+    <div class="char-card">
+      <div class="char-name">${c.name}</div>
+      <div class="char-origin">${c.origin}</div>
+      <div class="char-passive"><div class="char-tag">PASSIVA</div>${c.passive}</div>
+      <div class="char-ulti"><div class="char-tag">ULTI — 3 MANA</div>${c.ulti}</div>
+    </div>
+  `).join('');
+}
+buildChars();
+
+// ─── TABS ──────────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ─── ACCORDION ────────────────────────────────────────────────────────────
+function toggleAcc(head){
+  const item = head.parentElement;
+  item.classList.toggle('open');
+}
+
+// ─── SEARCH ───────────────────────────────────────────────────────────────
+// Build search index from DOM content
+function buildIndex(){
+  const index = [];
+  // index each tab
+  document.querySelectorAll('.tab-panel').forEach(panel=>{
+    const tabId = panel.id.replace('tab-','');
+    const tabName = document.querySelector(`.tab-btn[data-tab="${tabId}"]`)?.textContent.trim() || tabId;
+    // index acc-items
+    panel.querySelectorAll('.acc-item').forEach(item=>{
+      const title = item.querySelector('.acc-head')?.textContent.replace('▼','').trim() || '';
+      const body = item.querySelector('.acc-body')?.textContent || '';
+      index.push({tabId, tabName, title, body: body.replace(/\s+/g,' ').trim(), el: item});
+    });
+    // stat cards
+    panel.querySelectorAll('.stat-card').forEach(card=>{
+      index.push({tabId, tabName, title: 'Valori chiave', body: card.textContent.replace(/\s+/g,' ').trim(), el: card});
+    });
+    // char cards
+    panel.querySelectorAll('.char-card').forEach(card=>{
+      const name = card.querySelector('.char-name')?.textContent || '';
+      index.push({tabId, tabName, title: name, body: card.textContent.replace(/\s+/g,' ').trim(), el: card});
+    });
+    // tile cards
+    panel.querySelectorAll('.tile-card').forEach(card=>{
+      index.push({tabId, tabName, title: card.querySelector('.tile-name')?.textContent||'', body: card.textContent.replace(/\s+/g,' ').trim(), el: card});
+    });
+  });
+  return index;
+}
+
+let searchIndex = null;
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const searchClear = document.getElementById('searchClear');
+
+searchInput.addEventListener('input', ()=>{
+  const q = searchInput.value.trim();
+  searchClear.style.display = q ? 'block' : 'none';
+  if(!q){searchResults.style.display='none';return;}
+  if(!searchIndex) searchIndex = buildIndex();
+  const ql = q.toLowerCase();
+  const hits = searchIndex.filter(entry=>
+    entry.title.toLowerCase().includes(ql) || entry.body.toLowerCase().includes(ql)
+  ).slice(0,8);
+  if(!hits.length){
+    searchResults.innerHTML='<div class="sr-item" style="color:var(--text2)">Nessun risultato trovato.</div>';
+    searchResults.style.display='block';return;
+  }
+  searchResults.innerHTML = hits.map((h,i)=>{
+    const idx = h.body.toLowerCase().indexOf(ql);
+    const preview = idx>=0 ? '…'+h.body.slice(Math.max(0,idx-30),idx+60)+'…' : h.body.slice(0,80)+'…';
+    const highlighted = preview.replace(new RegExp(q,'gi'), m=>`<mark>${m}</mark>`);
+    return `<div class="sr-item" data-i="${i}">
+      <div class="sr-section">${h.tabName} › ${h.title}</div>
+      <div class="sr-preview">${highlighted}</div>
+    </div>`;
+  }).join('');
+  searchResults.style.display='block';
+  searchResults.querySelectorAll('.sr-item').forEach((item,i)=>{
+    item.addEventListener('click',()=>{
+      const h = hits[i];
+      // switch tab
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      document.querySelector(`.tab-btn[data-tab="${h.tabId}"]`).classList.add('active');
+      document.getElementById('tab-'+h.tabId).classList.add('active');
+      // open accordion if needed
+      const accItem = h.el.closest('.acc-item');
+      if(accItem && !accItem.classList.contains('open')) accItem.classList.add('open');
+      // scroll
+      setTimeout(()=>{
+        h.el.scrollIntoView({behavior:'smooth',block:'center'});
+        h.el.classList.add('hl-target');
+        setTimeout(()=>h.el.classList.remove('hl-target'),3000);
+      },100);
+      searchResults.style.display='none';
+      searchInput.value='';
+      searchClear.style.display='none';
+    });
+  });
+});
+
+searchClear.addEventListener('click',()=>{
+  searchInput.value='';
+  searchClear.style.display='none';
+  searchResults.style.display='none';
+});
+
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.search-wrap')) searchResults.style.display='none';
+});
+
+// ─── SERVICE WORKER ───────────────────────────────────────────────────────
+if('serviceWorker' in navigator){
+  const sw = `
+const CACHE='ae-v1';
+const ASSETS=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png'];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
+self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));
+`;
+  const blob = new Blob([sw],{type:'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+}
+</script>
+</body>
+</html>
